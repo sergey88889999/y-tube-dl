@@ -14,10 +14,13 @@ build:
 	. myenv/bin/activate && pyinstaller --onefile --name $(EXECUT_N) $(SRC)
 
 install:
+	# Запускать с правами администратора, например: 
+	# sudo make install 	
+	#
 	# Копирование исполняемого файла в системную директорию
-	sudo cp dist/$(EXECUT_N) /usr/local/bin/$(EXECUT_N)
+	cp dist/$(EXECUT_N) /usr/local/bin/$(EXECUT_N)
 	# Добавление прав на исполнение файла
-	sudo chmod +x /usr/local/bin/$(EXECUT_N)
+	chmod +x /usr/local/bin/$(EXECUT_N)
 
 clean:
 	# Очистка созданных файлов и директорий
