@@ -1,5 +1,5 @@
-# сам .gitignore
-#.gitignore
+# сам .gitignore если нужно будет
+# .gitignore
 # Игнорирование виртуального окружения
 myenv/
 
