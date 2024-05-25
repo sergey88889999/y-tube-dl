@@ -8,7 +8,7 @@ The application has been tested on Debian system.
 To install the y-tube-dl utility, you need to have Python 3 and pip installed:
     
     sudo apt update
-    sudo apt install python3 python3-pip
+    sudo apt install python3 python3-pip python3-venv
 
 1. Clone the repository from `git clone https://github.com/sergey88889999/y-tube-dl`.
 2. If you simply use the `make` command, the application will be built and installed.
@@ -17,7 +17,8 @@ To install the y-tube-dl utility, you need to have Python 3 and pip installed:
 
 ## Here's how it works:
 
-1.
+1. By default, the utility runs in interactive mode and prompts the user for a link to the YouTube video.
+2. Running the utility with command-line parameters is currently under development.
 
 ##  License
 This project is licensed under the GNU General Public License v3.0. See the LICENSE.md file for additional information.
