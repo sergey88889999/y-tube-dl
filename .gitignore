@@ -1,11 +1,16 @@
 # сам .gitignore если нужно будет
+# If you need it, here is the .gitignore file itself
 # .gitignore
 
 # Игнорирование виртуального окружения
+# Ignoring the virtual environment
 myenv/
 
 # игнорирование временных папок и файлов
+# Ignoring temporary folders and files
 build/
 dist/
 y-tube-dl.spec
+mo-po.sh
+
 

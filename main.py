@@ -9,23 +9,28 @@ import locale
 import os
 
 # функция задает формат времени в 00:00:00
+# The function sets the time format to 00:00:00
 def format_time(seconds):       
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return "{:02d}:{:02d}:{:02d}".format(int(hours), int(minutes), int(seconds))
 
 # функция отслеживает прогресс загрузки видео и выводит соответствующую информацию
+# The function tracks the progress of video uploading and outputs relevant information
 def progress_func(stream, chunk, bytes_remaining):
     total_size = stream.filesize
     bytes_downloaded = total_size - bytes_remaining
     percentage = (bytes_downloaded / total_size) * 100
 
     # Оценка времени загрузки
+    # Estimated upload time
     
     elapsed_time = time.time() - start_time
     download_speed = bytes_downloaded / elapsed_time
     
     # Оценка оставшегося времени
+    # Estimated remaining time
+    
     remaining_bytes = total_size - bytes_downloaded
     remaining_time = remaining_bytes / download_speed
     
@@ -33,11 +38,22 @@ def progress_func(stream, chunk, bytes_remaining):
     formatted_remaining_time = format_time(remaining_time)
 
     # Очистка предыдущего вывода
-    print('\r' + ' ' * 100 + '\r', end='')
+    # Clearing previous output
+    print('\r\033[K', end='', flush=True)
 
-   # Вывод новой информации
-    print(f"\rЗагружено: {percentage:.2f}% | Оставшееся время: {formatted_remaining_time} (время загрузки: {formatted_elapsed_time})", end='', flush=True) 
+    # print('\033[F' + ' ' * 100 + '\r', end='')
 
+    # Вывод статистики загрузки файла
+    # Outputting file upload statistics
+    print(_("Uploaded: %(percentage).2f%% | Remaining Time: %(formatted_remaining_time)s (upload time: %(formatted_elapsed_time)s)") % {
+        'percentage': percentage,
+        'formatted_remaining_time': formatted_remaining_time,
+        'formatted_elapsed_time': formatted_elapsed_time
+        }, end='', flush=True)
+
+    # print(f"\rUploaded: {percentage:.2f}% | Remaining Time: {formatted_remaining_time} (upload time: {formatted_elapsed_time})", end='', flush=True) 
+
+# Основной код программы
 # Определяем текущую локаль
 locale.setlocale(locale.LC_ALL, '')
 current_locale = locale.getlocale()

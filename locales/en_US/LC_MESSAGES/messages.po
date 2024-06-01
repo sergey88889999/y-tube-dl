@@ -25,3 +25,6 @@ msgstr "An error occurred while downloading the video: %(exception_type)s: %(exc
 
 msgid "Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."
 msgstr "Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."
+
+msgid "Uploaded: %(percentage).2f%% | Remaining Time: %(formatted_remaining_time)s (upload time: %(formatted_elapsed_time)s)"
+msgstr "Uploaded: %(percentage).2f%% | Remaining Time: %(formatted_remaining_time)s (upload time: %(formatted_elapsed_time)s)"

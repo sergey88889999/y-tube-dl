@@ -25,3 +25,6 @@ msgstr "Произошла ошибка во время загрузки вид�
 
 msgid "Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."
 msgstr "Утилита для терминала Linux v.0.0.1 - для загрузки видео с YouTube по предоставленной ссылке."
+
+msgid "Uploaded: %(percentage).2f%% | Remaining Time: %(formatted_remaining_time)s (upload time: %(formatted_elapsed_time)s)"
+msgstr "Загружено: %(percentage).2f%% | Оставшееся время: %(formatted_remaining_time)s (время загрузки: %(formatted_elapsed_time)s)"
