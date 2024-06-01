@@ -11,7 +11,7 @@ build:
 	# Активация виртуальной среды и установка зависимостей
 	. myenv/bin/activate && pip install -r requirements.txt
 	# Сборка исполняемого файла с помощью PyInstaller
-	. myenv/bin/activate && pyinstaller --onefile --name $(EXECUT_N) $(SRC)
+	. myenv/bin/activate && pyinstaller --onefile --add-data "locales:locales" --name $(EXECUT_N) $(SRC)
 
 install:
 	# Запускать с правами администратора, например: 

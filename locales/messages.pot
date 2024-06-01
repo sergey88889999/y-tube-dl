@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Enter YouTube video URL (Press ENTER to exit): "
+msgstr ""
+
+msgid "Available download options:"
+msgstr ""
+
+msgid "Resolution: %(resolution)s, Format: %(mime_type)s, Type: %(type)s, Quality: %(abr)s"
+msgstr ""
+
+msgid "Starting download of file: %(title)s.%(file_extension)s"
+msgstr ""
+
+msgid "Video successfully downloaded!"
+msgstr ""
+
+msgid "Error: Invalid YouTube video URL."
+msgstr ""
+
+msgid "An error occurred while downloading the video: %(exception_type)s: %(exception_message)s"
+msgstr ""
+
+msgid "A Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."
+msgstr ""
