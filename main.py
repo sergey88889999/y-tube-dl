@@ -51,9 +51,14 @@ def progress_func(stream, chunk, bytes_remaining):
         'formatted_elapsed_time': formatted_elapsed_time
         }, end='', flush=True)
 
-   
+# функция опеределения и смену локали по основании системных настроек, по умолчанию английский язык   
+# Function to determine and change the locale based on system settings, defaulting to English
 def set_locale():
-    locale.setlocale(locale.LC_ALL, '')
+    try:
+        locale.setlocale(locale.LC_ALL, '')
+    except locale.Error:
+        print("Error while setting locale")
+      
     current_locale = locale.getlocale()
     if current_locale[0] and current_locale[0].startswith('ru'): 
         language = 'ru_RU'
@@ -64,71 +69,31 @@ def set_locale():
     gettext.bindtextdomain('messages', locale_dir)
     gettext.textdomain('messages')
     gettext.translation('messages', localedir=locale_dir, languages=[language], fallback=True).install()
+
+# Функция загрузки видео по умолчанию без доп. параметров, с отображанием возможных вариантов качества
+# A function for video loading by default without additional parameters, displaying possible quality options
+def download_video(video_url):
     
-
-
-"""
-# Основной код программы
-# Определяем текущую локаль
-locale.setlocale(locale.LC_ALL, '')
-current_locale = locale.getlocale()
-
-if current_locale[0] and current_locale[0].startswith('ru'): 
-    lang_dir = 'ru_RU' 
-else: 
-    lang_dir = 'en_US'
-
-# Путь к каталогу с файлами перевода 
-locale_dir = os.path.join(os.path.dirname(__file__), 'locales') 
-
-# Устанавливаем каталог для поиска файлов перевода 
-gettext.bindtextdomain('messages', locale_dir) 
-# Устанавливаем текущий домен 
-gettext.textdomain('messages')
-"""
-
-
-set_locale()
-print(_("Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."))
-
-while True:
-
-    video_url = input(_("Enter YouTube video URL (Press ENTER to exit): "))
-
-    if not video_url:
-        break 
-
+    # Объявляем start_time как глобальную переменную
+    # We declare start_time as a global variable.
+    global start_time  
+    start_time = time.time()
     try:
-
         # Создайте объект YouTube с указанным URL-адресом
         yt = YouTube(video_url, on_progress_callback=progress_func)
 
-        # test кусок кода - доступные параметры загрузки видео просто для справки
-        print(_("Available download options:"))
-        for stream in yt.streams:
-            quality = stream.abr if stream.abr else "None"  # Обработка отсутствующего качества
-            print(_("Resolution: %(resolution)s, Format: %(mime_type)s, Type: %(type)s, Quality: %(abr)s") % {
-                'resolution': stream.resolution,
-                'mime_type': stream.mime_type,
-                'type': stream.type,
-                'abr': stream.abr
-            })
-           
         # Получите лучшее качество видео в формате mp4
         video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
 
         # Выводим имя файла перед началом загрузки
-                
         print(_("Starting download of file: %(title)s.%(file_extension)s") % {
             'title': video.title,
             'file_extension': video.mime_type.split('/')[-1]
         })
 
-        start_time = time.time()
-
         # Загрузите видео
         video.download()
-        
+
         print()
         print(_("Video successfully downloaded!"))
     except RegexMatchError:
@@ -138,5 +103,20 @@ while True:
             'exception_type': type(e).__name__,
             'exception_message': str(e)
         })
-    
 
+def main():
+    
+    set_locale()
+    
+    print(_("Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."))
+
+    while True:
+        video_url = input(_("Enter YouTube video URL (Press ENTER to exit): "))   
+        if video_url:
+            download_video(video_url)
+        else:
+            break    
+
+if __name__ == "__main__":
+    main()
+    
