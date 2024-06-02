@@ -51,8 +51,23 @@ def progress_func(stream, chunk, bytes_remaining):
         'formatted_elapsed_time': formatted_elapsed_time
         }, end='', flush=True)
 
-    # print(f"\rUploaded: {percentage:.2f}% | Remaining Time: {formatted_remaining_time} (upload time: {formatted_elapsed_time})", end='', flush=True) 
+   
+def set_locale():
+    locale.setlocale(locale.LC_ALL, '')
+    current_locale = locale.getlocale()
+    if current_locale[0] and current_locale[0].startswith('ru'): 
+        language = 'ru_RU'
+    else: 
+        language = 'en_US'
+    
+    locale_dir = os.path.join(os.path.dirname(__file__), 'locales')
+    gettext.bindtextdomain('messages', locale_dir)
+    gettext.textdomain('messages')
+    gettext.translation('messages', localedir=locale_dir, languages=[language], fallback=True).install()
+    
 
+
+"""
 # Основной код программы
 # Определяем текущую локаль
 locale.setlocale(locale.LC_ALL, '')
@@ -70,7 +85,10 @@ locale_dir = os.path.join(os.path.dirname(__file__), 'locales')
 gettext.bindtextdomain('messages', locale_dir) 
 # Устанавливаем текущий домен 
 gettext.textdomain('messages')
+"""
 
+
+set_locale()
 print(_("Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."))
 
 while True:

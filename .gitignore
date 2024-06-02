@@ -12,5 +12,6 @@ build/
 dist/
 y-tube-dl.spec
 mo-po.sh
+__pycache__/
 
 
