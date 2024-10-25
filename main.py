@@ -7,6 +7,7 @@ import gettext
 from gettext import gettext as _
 import locale
 import os
+import argparse
 
 # функция задает формат времени в 00:00:00
 # The function sets the time format to 00:00:00
@@ -40,8 +41,6 @@ def progress_func(stream, chunk, bytes_remaining):
     # Очистка предыдущего вывода
     # Clearing previous output
     print('\r\033[K', end='', flush=True)
-
-    # print('\033[F' + ' ' * 100 + '\r', end='')
 
     # Вывод статистики загрузки файла
     # Outputting file upload statistics
@@ -81,7 +80,6 @@ def download_video(video_url):
     try:
         # Создайте объект YouTube с указанным URL-адресом
         yt = YouTube(video_url, on_progress_callback=progress_func)
-
         # Получите лучшее качество видео в формате mp4
         video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
 
@@ -104,19 +102,48 @@ def download_video(video_url):
             'exception_message': str(e)
         })
 
-def main():
-    
-    set_locale()
-    
-    print(_("Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."))
-
+def interactive():
     while True:
         video_url = input(_("Enter YouTube video URL (Press ENTER to exit): "))   
         if video_url:
             download_video(video_url)
         else:
             break    
+        
+def main():
+    
+    set_locale()
+    
+    print(_("Linux terminal utility v.0.0.1 - that downloads videos from YouTube using a provided link."))
+        
+    # Создание парсера аргументов командной строки
+    # Creating a command-line argument parser.
+    # parser = argparse.ArgumentParser(description='Description of command-line parameters.')
+    class CustomHelpFormatter(argparse.HelpFormatter):
+        def add_usage(self, usage, actions, groups, prefix=None):
+            if prefix is None:
+                prefix = _('usage: ')
+            return super().add_usage(usage, actions, groups, prefix)
 
+        def start_section(self, heading):
+            heading = _(heading)
+            super().start_section(heading)
+
+        def add_argument(self, action):
+            action.help = _(action.help)
+            super().add_argument(action)
+
+    parser = argparse.ArgumentParser(prog='y-tube-dl',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--URL', type=str, default=None, help=_('URL - link to the YouTube video'))
+    args = parser.parse_args()
+    if args.URL:
+        download_video(args.URL)
+    else:
+        print(_("usage: y-tube-dl [-h] [--URL URL]; by default, it starts in interactive mode with limited functionality."))
+        interactive()
+        
+    
 if __name__ == "__main__":
     main()
     
